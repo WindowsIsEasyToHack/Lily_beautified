@@ -1,4 +1,5 @@
 import random
+import os
 
 def opening_text():
     '''
@@ -98,6 +99,31 @@ moves, the player remains at his current position.
         return position
 
 
+def clear_console():
+    """
+    Keeping the console refreshed and cleans up the mess from previous moves.
+    
+    :return: None
+    """
+    command = 'clear'
+    if os.name in ('nt', 'dos'):
+        command = 'cls'
+    os.system(command)
+
+
+def exit_game():
+    """
+    Exiting the program with waiting for user interaction
+    
+    :return: None
+    """
+
+    command = 'read -rsp'
+    if os.name in ('nt', 'dos'):
+        command = 'pause'
+    os.system(command)
+
+
 def treasure_hunter_game():
     '''
     Controls the entire game:
@@ -134,6 +160,7 @@ def treasure_hunter_game():
             # Checks if input is valid.
             if player_move in "rlou":
                 move_direction = player_move
+                clear_console()
                 break
             # Enter "q" to quit
             elif player_move == "q":
@@ -147,6 +174,7 @@ def treasure_hunter_game():
         # Victory condition
         if player_position == treasure:
             print("You won. Nice.")
+            exit_game()
             break
         # Defeat condition
         if moves == 0:
